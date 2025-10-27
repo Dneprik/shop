@@ -22,7 +22,7 @@ class Customer
     private ?\DateTimeImmutable $createdAt = null;
 
 
-    private function __construct(string $phone)
+    public function __construct(string $phone)
     {
         $this->phone = $phone;
         $this->createdAt = new \DateTimeImmutable();

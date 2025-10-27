@@ -29,11 +29,9 @@ class SubscriptionPackage
     #[ORM\Column]
     private \DateTimeImmutable $createdAt;
 
-    public function __construct(string $name, string $price, bool $includesPhysicalMagazine = false)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->price = $price;
-        $this->includesPhysicalMagazine = $includesPhysicalMagazine;
+        $this->includesPhysicalMagazine = false;
         $this->isDeleted = false;
         $this->createdAt = new \DateTimeImmutable();
     }

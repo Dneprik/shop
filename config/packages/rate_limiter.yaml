@@ -1,0 +1,6 @@
+framework:
+    rate_limiter:
+        sms_global:
+            policy: 'sliding_window'
+            limit: 5          # максимум 5 SMS
+            interval: '1 minute'

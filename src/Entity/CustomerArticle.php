@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\CustomerArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: CustomerArticleRepository::class)]
 #[ORM\Table(name: 'customer_articles')]
 #[ORM\UniqueConstraint(name: 'ux_customer_article', columns: ['customer_id', 'article_id'])]
 class CustomerArticle

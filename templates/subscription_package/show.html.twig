@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SubscriptionPackage{% endblock %}
+
+{% block body %}
+    <h1>SubscriptionPackage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ subscription_package.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ subscription_package.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ subscription_package.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ subscription_package.price }}</td>
+            </tr>
+            <tr>
+                <th>IncludesPhysicalMagazine</th>
+                <td>{{ subscription_package.includesPhysicalMagazine ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsDeleted</th>
+                <td>{{ subscription_package.isDeleted ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ subscription_package.createdAt ? subscription_package.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_subscription_package_index') }}">back to list</a>
+
+    <a href="{{ path('app_subscription_package_edit', {'id': subscription_package.id}) }}">edit</a>
+
+{% endblock %}

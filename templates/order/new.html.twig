@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Create Order</h1>
+        <div class="mb-3">
+        {# Простые alerts для flash #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert {{ label == 'success' ? 'alert-success' : 'alert-danger' }} mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+
+        {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.phone) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.articles) }}
+            <div class="form-check">
+                {% for child in form.articles %}
+                    <div class="form-check">
+                        {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                        {{ form_label(child) }}
+                    </div>
+                {% endfor %}
+            </div>
+            {{ form_errors(form.articles) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.subscription) }}
+            {{ form_widget(form.subscription, {'attr': {'class': 'form-select'}}) }}
+            {{ form_errors(form.subscription) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Buy</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

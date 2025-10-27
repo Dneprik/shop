@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Orders{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>All Orders</h1>
+            <a href="{{ path('order_by_phone') }}" class="btn btn-secondary">Back to Search</a>
+        </div>
+
+        {% if orders|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Number</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Created</th>
+                        <th>Items Count</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for o in orders %}
+                        <tr>
+                            <td>{{ o.orderNumber }}</td>
+                            <td>{{ o.customer.phone }}</td>
+                            <td><span class="badge bg-{{ o.status == 'PAID' ? 'success' : 'secondary' }}">{{ o.status }}</span></td>
+                            <td>{{ o.totalPrice }}</td>
+                            <td>{{ o.createdAt|date('Y-m-d H:i') }}</td>
+                            <td>{{ o.items|length }}</td>
+                            <td>
+                                <a href="{{ path('show_order', {number: o.orderNumber}) }}" class="btn btn-sm btn-outline-primary me-1">View</a>
+                                <form method="post" action="{{ path('order_delete', {number: o.orderNumber}) }}" onsubmit="return confirm('Delete order #{{ o.orderNumber }}?');" style="display: inline;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ o.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                <h4>No orders yet</h4>
+                <p><a href="{{ path('order_new') }}" class="btn btn-primary">Create First Order</a></p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

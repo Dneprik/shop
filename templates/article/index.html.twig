@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Articles</h1>
+            <a href="{{ path('app_article_new') }}" class="btn btn-primary">New Article</a>
+        </div>
+
+        {% if articles|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Supplier Email</th>
+                        <th>Label Delete</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for article in articles %}
+                        <tr>
+                            <td>{{ article.id }}</td>
+                            <td>{{ article.name }}</td>
+                            <td>{{ article.description|slice(0, 50) ~ '...' }}</td>
+                            <td>${{ article.price }}</td>
+                            <td>{{ article.supplierEmail }}</td>
+                            <td><span class="badge {{ article.isDeleted ? 'bg-danger' : 'bg-success' }}">{{ article.isDeleted ? 'Yes' : 'No' }}</span></td>
+                            <td>{{ article.createdAt|date('Y-m-d H:i') }}</td>
+                            <td>
+                                <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-sm btn-outline-primary me-1">View</a>
+                                <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                <h4>No articles yet</h4>
+                <p><a href="{{ path('app_article_new') }}" class="btn btn-primary">Create First Article</a></p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

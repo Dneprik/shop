@@ -22,20 +22,18 @@ class Article
     private string $price;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?int $supplierEmail = null;
+    private ?string $supplierEmail = null;
 
     #[ORM\Column(options: ['default' => true])]
     private bool $isDeleted = false;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeInterface $createdAt;
 
-    public function __construct(string $name, string $price)
+    public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
         $this->isDeleted = false;
-        $this->name = $name;
-        $this->price = $price;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

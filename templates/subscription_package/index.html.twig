@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subscription Packages{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Subscription Packages</h1>
+            <a href="{{ path('app_subscription_package_new') }}" class="btn btn-primary">New Package</a>
+        </div>
+
+        {% if subscription_packages|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Includes Physical Magazine</th>
+                        <th>Label Delete</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for subscription_package in subscription_packages %}
+                        <tr>
+                            <td>{{ subscription_package.id }}</td>
+                            <td>{{ subscription_package.name }}</td>
+                            <td>{{ subscription_package.description|slice(0, 50) ~ '...' }}</td>
+                            <td>${{ subscription_package.price }}</td>
+                            <td><span class="badge {{ subscription_package.includesPhysicalMagazine ? 'bg-success' : 'bg-secondary' }}">{{ subscription_package.includesPhysicalMagazine ? 'Yes' : 'No' }}</span></td>
+                            <td><span class="badge {{ subscription_package.isDeleted ? 'bg-danger' : 'bg-success' }}">{{ subscription_package.isDeleted ? 'Yes' : 'No' }}</span></td>
+                            <td>{{ subscription_package.createdAt|date('Y-m-d H:i') }}</td>
+                            <td>
+                                <a href="{{ path('app_subscription_package_show', {'id': subscription_package.id}) }}" class="btn btn-sm btn-outline-primary me-1">View</a>
+                                <a href="{{ path('app_subscription_package_edit', {'id': subscription_package.id}) }}" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                <h4>No subscription packages yet</h4>
+                <p><a href="{{ path('app_subscription_package_new') }}" class="btn btn-primary">Create First Package</a></p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\CustomerSubscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: CustomerSubscriptionRepository::class)]
 #[ORM\Table(name: 'customer_subscriptions')]
 #[ORM\UniqueConstraint(name: 'ux_one_subscription_per_customer', columns: ['customer_id'])]
 class CustomerSubscription
